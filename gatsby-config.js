@@ -1,9 +1,16 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Clearbot`,
+    description: `A autonomous swarm robotics system to clean our oceans`,
+    author: `@utkarsh867`,
+    siteUrl: "https://www.clearbot.dev/",
   },
+  proxy: [
+    {
+      prefix: "/api",
+      url: "http://localhost:7071",
+    },
+  ],
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -24,11 +31,18 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/logo.svg`, // This path is relative to the root of the site.
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /\.svg$/,
+        },
+      },
+    },
+    "gatsby-plugin-cname",
+    `gatsby-plugin-offline`,
   ],
 }

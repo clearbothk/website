@@ -1,42 +1,50 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
+import { Flex, Box, Text, Link } from "@chakra-ui/core"
+import Logo from "../images/LogoSide.svg"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
+const Header = () => {
+  const [show, setShow] = React.useState(false)
+  const handleToggle = () => setShow(!show)
+
+  return (
+    <Box as="header">
+      <Flex
+        as="nav"
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        padding="1.5rem"
+        alignItems="center"
+        p={[1, 2, 3]}
+      >
+        <Box flex="1 1 auto">
+          <Link href="/">
+            <Box as={Logo} maxW="3xs"></Box>
+          </Link>
+        </Box>
+        <Box
+          display={{
+            xs: show ? "block" : "none",
+            sm: show ? "block" : "none",
+            md: "flex",
           }}
         >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
-
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
+          <Link href="#aboutus">
+            <Text mr={[1, 2, 4]}>About Us</Text>
+          </Link>
+          <Link href="#press">
+            <Text mr={[1, 2, 4]}>Press</Text>
+          </Link>
+          <Link href="#awards">
+            <Text mr={[1, 2, 4]}>Awards</Text>
+          </Link>
+          <Link href="#contactus">
+            <Text mr={[1, 2, 4]}>Contact Us</Text>
+          </Link>
+        </Box>
+      </Flex>
+    </Box>
+  )
 }
 
 export default Header
