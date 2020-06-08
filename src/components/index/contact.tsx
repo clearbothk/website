@@ -37,6 +37,7 @@ export const Contact = () => {
                 id="name"
                 aria-describedby="email-helper-text"
                 placeholder="Name"
+                fontFamily="body"
               />
             </FormControl>
             <FormControl mb="4">
@@ -45,10 +46,15 @@ export const Contact = () => {
                 id="email"
                 aria-describedby="email-helper-text"
                 placeholder="Email address"
+                fontFamily="body"
               />
             </FormControl>
             <FormControl mb="4">
-              <Textarea id="comments" placeholder="Comments" />
+              <Textarea
+                id="comments"
+                placeholder="Comments"
+                fontFamily="body"
+              />
             </FormControl>
           </Box>
         </Box>

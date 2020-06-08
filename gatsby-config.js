@@ -7,7 +7,7 @@ module.exports = {
   },
   proxy: [
     {
-      prefix: "/api",
+      prefix: "/api", // TODO: Fix proxy issue in production
       url: "http://localhost:7071",
     },
   ],
@@ -40,6 +40,15 @@ module.exports = {
         rule: {
           include: /\.svg$/,
         },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `poppins\:300,400,700`, // you can also specify font weights and styles
+        ],
+        display: "swap",
       },
     },
     "gatsby-plugin-cname",
