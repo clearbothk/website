@@ -29,7 +29,11 @@ export const UploadArea = () => {
   }
 
   const azureUpload = async (data: File) => {
-    const response = await fetch("/api/GenerateUploadToken")
+    const uri =
+      process.env.NODE_ENV === "development"
+        ? "/api/GenerateUploadToken"
+        : "https://clearbotdatabuilder0.azurewebsites.net/api/GenerateUploadToken?code=jV6T1zWPoGYaZFSum2Wf2uN1rRLvFk5meRuRAAHbR53FfRsUTZIPNw=="
+    const response = await fetch(uri)
     const r = await response.json()
     const sas = r.token
     const blockBlobClient = new BlobServiceClient(
