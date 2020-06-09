@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "@clearbothk/website",
   "private": true,
   "description": "A simple starter to get up and developing quickly with Gatsby",
   "version": "0.1.0",
@@ -8,6 +8,7 @@
   "dependencies": {
     "@azure/storage-blob": "^12.1.2",
     "@chakra-ui/core": "^0.8.0",
+    "@clearbothk/react-image-annotation": "0.0.3",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "emotion-theming": "^10.0.27",
@@ -22,6 +23,7 @@
     "gatsby-plugin-sharp": "^2.6.9",
     "gatsby-source-filesystem": "^2.3.8",
     "gatsby-transformer-sharp": "^2.5.3",
+    "lodash": "^4.17.15",
     "open-graph-scraper": "^4.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
