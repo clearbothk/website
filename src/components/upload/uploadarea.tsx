@@ -5,6 +5,10 @@ import { BlobServiceClient } from "@azure/storage-blob"
 import { useDropzone } from "react-dropzone"
 
 export const UploadArea = () => {
+  const toast = useToast()
+  const [uploadedFiles, setUploadedFiles] = useState([])
+  const [uploading, setUploading] = useState(false)
+
   const {
     acceptedFiles,
     getRootProps,
@@ -12,10 +16,7 @@ export const UploadArea = () => {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "application/zip" })
-
-  const toast = useToast()
-  const [uploadedFiles, setUploadedFiles] = useState([])
+  } = useDropzone({ accept: "application/zip", disabled: uploading })
 
   function getColor(): string {
     if (isDragAccept) {
@@ -41,16 +42,18 @@ export const UploadArea = () => {
     )
       .getContainerClient("uploads")
       .getBlockBlobClient(r.name)
-    const uploadBlobResponse = await blockBlobClient.upload(data, data.size)
+    const uploadBlobResponse = await blockBlobClient.uploadBrowserData(data)
     return uploadBlobResponse
   }
 
   useEffect(() => {
+    setUploading(true)
+    const promises = []
     const files = acceptedFiles.filter(file => uploadedFiles.indexOf(file) < 0)
-    files.map(file => {
-      azureUpload(file).then(res => {
-        console.log(res)
-        console.log(
+    if (files.length > 0) {
+      Promise.all(
+        files.map(async file => {
+          await azureUpload(file)
           toast({
             title: "File uploaded to cloud storage",
             description:
@@ -59,15 +62,39 @@ export const UploadArea = () => {
             duration: 9000,
             isClosable: true,
           })
-        )
+          setUploadedFiles([...uploadedFiles, file])
+        })
+      ).then(() => {
+        setUploading(false)
       })
-      setUploadedFiles([...uploadedFiles, file])
-    })
+    } else {
+      setUploading(false)
+    }
   }, [acceptedFiles])
+
+  if (uploading) {
+    return (
+      <Flex
+        p={[4, 4, 4, 4, 4]}
+        justifyContent="center"
+        alignItems="center"
+        borderWidth="2px"
+        borderRadius="2px"
+        borderStyle="dashed"
+        outline="none"
+        h="sm"
+        backgroundColor="#fafafa"
+        maxW="5xl"
+        margin="auto"
+      >
+        <Text>Uploading</Text>{" "}
+      </Flex>
+    )
+  }
 
   return (
     <Flex
-      {...getRootProps({ className: "dropzone" })}
+      {...getRootProps({ className: `dropzone` })}
       transition="border .24s ease-in-out"
       p={[4, 4, 4, 4, 4]}
       justifyContent="center"
@@ -82,8 +109,8 @@ export const UploadArea = () => {
       maxW="5xl"
       margin="auto"
     >
-      <input {...getInputProps()} />
-      <Text>Just drop ZIP files here and they will be uploaded</Text>
+      <input {...getInputProps()} />{" "}
+      <Text>Just drop ZIP files here and they will be uploaded</Text>{" "}
     </Flex>
   )
 }

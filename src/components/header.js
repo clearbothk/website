@@ -4,7 +4,6 @@ import Logo from "../images/LogoSide.svg"
 
 const Header = () => {
   const [show, setShow] = React.useState(false)
-  const handleToggle = () => setShow(!show)
 
   return (
     <Box as="header">
