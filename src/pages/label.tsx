@@ -20,13 +20,13 @@ const Label = () => {
   const [annotation, setCurrentAnnotation] = useState({})
   const [imageURL, setImageURL] = useState("")
   const [loadingImage, setLoadingImage] = useState(false)
+
   const toast = useToast()
   const onSubmit = annotation => {
     const { geometry, data } = annotation
     const geometryRounded = _.mapValues(geometry, val =>
       isNaN(val) ? val : _.round(val, 3)
     )
-    console.log(geometryRounded)
     setCurrentAnnotation({})
     setAnnotations([
       ...annotations,
@@ -48,7 +48,18 @@ const Label = () => {
       const response = await fetch(uri)
       const { image } = await response.json()
       setLoadingImage(false)
-      setImageURL(image)
+      setImageURL(image || "")
+      console.log(image)
+      if (image === undefined) {
+        toast({
+          title: "There are no more images that need labelling.",
+          description:
+            "We might have more images after midnight! Please try again later.",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+        })
+      }
     } catch (e) {
       console.log(e)
       toast({
@@ -62,6 +73,12 @@ const Label = () => {
     }
   }
 
+  function reset() {
+    setAnnotations([])
+    setCurrentAnnotation({})
+    setImageURL("")
+    getImageFromAzure()
+  }
   return (
     <Layout>
       <SEO title="Labelling Tool" />
@@ -88,11 +105,23 @@ const Label = () => {
           )}
         </Box>
         <Box>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Heading fontSize={["xl", "xl", "xl", "xl", "2xl"]}>
+          <Flex alignItems="center">
+            <Heading fontSize={["xl", "xl", "xl", "xl", "2xl"]} flex="1 1 auto">
               Annotations
             </Heading>
-            <SendLabels image={imageURL} annotations={annotations} />
+            <Button
+              mr={2}
+              onClick={getImageFromAzure}
+              isLoading={loadingImage}
+              isDisabled={imageURL === ""}
+            >
+              Next
+            </Button>
+            <SendLabels
+              image={imageURL}
+              annotations={annotations}
+              reset={reset}
+            />
           </Flex>
           <LabelList
             annotations={annotations}

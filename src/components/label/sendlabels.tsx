@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Button, useToast } from "@chakra-ui/core"
 
-export const SendLabels = ({ image, annotations }) => {
+export const SendLabels = ({ image, annotations, reset }) => {
   const toast = useToast()
   const [loadingLabelsRequest, setLoadingLabelsRequest] = useState(false)
 
@@ -28,6 +28,7 @@ export const SendLabels = ({ image, annotations }) => {
         }),
       })
       setLoadingLabelsRequest(false)
+      reset()
     } else {
       toast({
         title: "Did you mark any annotations?",

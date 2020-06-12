@@ -50,7 +50,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "deploy": "yarn build && gh-pages -d public --repo https://github.com/clearbothk/clearbothk.github.io -b master"
+    "deploy": "npm run build && gh-pages -d public --repo https://github.com/clearbothk/clearbothk.github.io -b master"
   },
   "repository": {
     "type": "git",

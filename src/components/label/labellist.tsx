@@ -52,7 +52,6 @@ export const LabelList = ({ annotations, setAnnotations }) => {
             aria-label="Search database"
             variant="outline"
             icon="delete"
-            color="brandBlue"
             onClick={e => {
               deleteAnnotation(annotation.data.id, annotations, setAnnotations)
             }}
