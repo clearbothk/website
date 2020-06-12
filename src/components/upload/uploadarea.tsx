@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Text, useToast, Flex } from "@chakra-ui/core"
+import { Text, useToast, Box, Flex, Progress } from "@chakra-ui/core"
 
 import { BlobServiceClient } from "@azure/storage-blob"
 import { useDropzone } from "react-dropzone"
@@ -8,6 +8,8 @@ export const UploadArea = () => {
   const toast = useToast()
   const [uploadedFiles, setUploadedFiles] = useState([])
   const [uploading, setUploading] = useState(false)
+  const [progressValue, setProgressValue] = useState(0)
+  const [currentUploadFile, setCurrentUploadFile] = useState("")
 
   const {
     acceptedFiles,
@@ -29,7 +31,13 @@ export const UploadArea = () => {
     return "#eeeeee"
   }
 
+  function onUploadProgress(totalSize, progress) {
+    const { loadedBytes } = progress
+    setProgressValue((loadedBytes / totalSize) * 100.0)
+  }
+
   const azureUpload = async (data: File) => {
+    const totalSize = data.size
     const uri =
       process.env.NODE_ENV === "development"
         ? "/api/GenerateUploadToken"
@@ -42,17 +50,19 @@ export const UploadArea = () => {
     )
       .getContainerClient("uploads")
       .getBlockBlobClient(r.name)
-    const uploadBlobResponse = await blockBlobClient.uploadBrowserData(data)
+    const uploadBlobResponse = await blockBlobClient.uploadBrowserData(data, {
+      onProgress: progress => onUploadProgress(totalSize, progress),
+    })
     return uploadBlobResponse
   }
 
   useEffect(() => {
     setUploading(true)
-    const promises = []
     const files = acceptedFiles.filter(file => uploadedFiles.indexOf(file) < 0)
     if (files.length > 0) {
       Promise.all(
         files.map(async file => {
+          setCurrentUploadFile(file.name)
           await azureUpload(file)
           toast({
             title: "File uploaded to cloud storage",
@@ -63,6 +73,7 @@ export const UploadArea = () => {
             isClosable: true,
           })
           setUploadedFiles([...uploadedFiles, file])
+          setProgressValue(0)
         })
       ).then(() => {
         setUploading(false)
@@ -87,7 +98,16 @@ export const UploadArea = () => {
         maxW="5xl"
         margin="auto"
       >
-        <Text>Uploading</Text>{" "}
+        <Box w="100%" textAlign="center">
+          <Text>Uploading {currentUploadFile}</Text>
+          <Progress
+            hasStripe
+            isAnimated
+            value={progressValue}
+            w="100%"
+            mt={5}
+          />
+        </Box>
       </Flex>
     )
   }
