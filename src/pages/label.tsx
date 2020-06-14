@@ -7,7 +7,9 @@ import {
   Grid,
   Heading,
   useToast,
+  Select,
 } from "@chakra-ui/core"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Annotation from "@clearbothk/react-image-annotation"
@@ -15,7 +17,24 @@ import _ from "lodash"
 import { LabelList } from "../components/label/labellist"
 import { SendLabels } from "../components/label/sendlabels"
 
-const Label = () => {
+const Dropdown = ({
+  options,
+  value,
+  onChange,
+}: {
+  options: string[]
+  value: any
+  onChange: any
+}) => (
+  <Select value={value} onChange={onChange}>
+    {options.map(op => (
+      <option value={op}>{op}</option>
+    ))}
+  </Select>
+)
+
+const Label = ({ data }) => {
+  console.log(data)
   const [annotations, setAnnotations] = useState([])
   const [annotation, setCurrentAnnotation] = useState({})
   const [imageURL, setImageURL] = useState("")
@@ -95,6 +114,9 @@ const Label = () => {
               value={annotation}
               onChange={setCurrentAnnotation}
               onSubmit={onSubmit}
+              renderInputArea={props => (
+                <Dropdown {...props} options={data.site.siteMetadata.taco} />
+              )}
             />
           ) : (
             <Flex minH="md" alignItems="center" justifyContent="center">
@@ -132,5 +154,15 @@ const Label = () => {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        taco
+      }
+    }
+  }
+`
 
 export default Label
