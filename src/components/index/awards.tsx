@@ -8,7 +8,7 @@ export const Awards = ({ awards }) => {
     <SectionLayout title="Awards" id="awards">
       <Grid
         id="awards"
-        maxW="5xl"
+        maxW="2xl"
         margin="auto"
         p={4}
         templateColumns={[
@@ -20,6 +20,7 @@ export const Awards = ({ awards }) => {
         ]}
         alignItems="center"
         justifyItems="center"
+        gridGap={10}
       >
         {awards.map((award, index) => (
           <Box key={index} w="3xs">
