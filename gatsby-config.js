@@ -134,5 +134,11 @@ module.exports = {
     },
     "gatsby-plugin-cname",
     `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-gtag`,
+      options: {
+        trackingId: "UA-162905496-1",
+      },
+    },
   ],
 }
