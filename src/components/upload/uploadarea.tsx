@@ -18,7 +18,7 @@ export const UploadArea = () => {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "application/zip", disabled: uploading })
+  } = useDropzone({ accept: "application/zip, application/x-zip-compressed", disabled: uploading })
 
   function getColor(): string {
     if (isDragAccept) {
