@@ -91,11 +91,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Clearbot`,
+        short_name: `Clearbot`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#fff`,
+        theme_color: `#005c66`,
         display: `minimal-ui`,
         icon: `src/images/logo.svg`, // This path is relative to the root of the site.
       },
