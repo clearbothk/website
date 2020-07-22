@@ -7,12 +7,14 @@ import { Press } from "../components/index/press"
 import { Awards } from "../components/index/awards"
 import { Contribution } from "../components/index/contribution"
 import { Contact } from "../components/index/contact"
+import { HeaderVideo } from "../components/index/headervideo"
 
 const IndexPage = ({ data }) => {
   console.log(data)
   return (
     <Layout>
       <SEO title="Home" />
+      <HeaderVideo Vidsrc="https://www.youtube.com/embed/4UVwltTj8Rw?autoplay=1&playlist=4UVwltTj8Rw&loop=1&controls=0" />
       <Banner image={data.banner.childImageSharp.fluid} />
       <Press scmp={data.scmp.childImageSharp.fluid} />
       <Awards
