@@ -13,7 +13,7 @@ export const Banner: React.FC<BannerProps> = ({ image }) => {
         position="absolute"
         h="100%"
         w="100%"
-        backgroundColor="rgba(0,0,0,0.6)"
+        backgroundColor="rgba(0,0,0,0.4)"
         zIndex={10}
       ></Box>
       <Img fluid={image} />
@@ -27,8 +27,7 @@ export const Banner: React.FC<BannerProps> = ({ image }) => {
       >
         <Box>
           <Heading color="brandYellow" fontSize={["xl", "xl", "3xl", "5xl"]}>
-            WE BUILD ROBOTS TO EMPOWER COMMUNITIES TO GET PLASTIC OUT OF THE
-            OCEAN
+            WE BUILD ROBOTS TO GET PLASTIC OUT OF THE OCEAN
           </Heading>
           <Text
             color="white"

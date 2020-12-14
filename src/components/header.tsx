@@ -21,13 +21,7 @@ const Header = () => {
             <Box as={Logo} maxW="3xs"></Box>
           </Link>
         </Box>
-        <Box
-          display={{
-            xs: show ? "block" : "none",
-            sm: show ? "block" : "none",
-            md: "flex",
-          }}
-        >
+        <Flex display={["none", "flex", "flex", "flex", "flex"]}>
           <Link href="#aboutus">
             <Text mr={[1, 2, 4]}>About Us</Text>
           </Link>
@@ -40,7 +34,7 @@ const Header = () => {
           <Link href="#contactus">
             <Text mr={[1, 2, 4]}>Contact Us</Text>
           </Link>
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   )

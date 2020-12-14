@@ -16,7 +16,6 @@ const IndexPage = ({ data }) => {
     <Layout>
       <SEO title="Home" />
       <HeaderVideo vidSrc={vidClearbotHeader} />
-      <Banner image={data.banner.childImageSharp.fluid} />
       <Press scmp={data.scmp.childImageSharp.fluid} />
       <Awards
         awards={[
@@ -24,7 +23,10 @@ const IndexPage = ({ data }) => {
           data.ggcs.childImageSharp.fluid,
         ]}
       />
-      <Contribution prediction={data.prediction.childImageSharp.fluid} />
+      <Contribution
+        prediction={data.prediction.childImageSharp.fluid}
+        helpus={data.helpus.childImageSharp.fluid}
+      />
       <Contact />
     </Layout>
   )
@@ -32,7 +34,7 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    banner: file(relativePath: { eq: "banner.jpg" }) {
+    banner: file(relativePath: { eq: "banner2.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 1080) {
           ...GatsbyImageSharpFluid_noBase64
@@ -54,6 +56,13 @@ export const query = graphql`
       }
     }
     ggcs: file(relativePath: { eq: "ggcs.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1080) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    helpus: file(relativePath: { eq: "helpus.png" }) {
       childImageSharp {
         fluid(maxWidth: 1080) {
           ...GatsbyImageSharpFluid_noBase64
