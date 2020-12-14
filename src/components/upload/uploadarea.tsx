@@ -19,7 +19,8 @@ export const UploadArea = () => {
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    accept: "application/zip, application/x-zip-compressed",
+    accept:
+      "application/zip, application/x-zip-compressed, image/jpeg, image/png, image/jpg",
     disabled: uploading,
   })
 
@@ -45,7 +46,15 @@ export const UploadArea = () => {
       process.env.NODE_ENV === "development"
         ? "/api/GenerateUploadToken"
         : "https://clearbotdatabuilder0.azurewebsites.net/api/GenerateUploadToken?code=jV6T1zWPoGYaZFSum2Wf2uN1rRLvFk5meRuRAAHbR53FfRsUTZIPNw=="
-    const response = await fetch(uri)
+    const filename = data.name
+    const response = await fetch(uri, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filename }),
+    })
     const r = await response.json()
     const sas = r.token
     const blockBlobClient = new BlobServiceClient(
