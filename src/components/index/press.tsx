@@ -1,6 +1,6 @@
 import React from "react"
 import { SectionLayout } from "./sectionlayout"
-import { Text, Box, Grid, Heading, Flex, Link } from "@chakra-ui/core"
+import { Text, Box, Grid, Heading, Flex, Link } from "@chakra-ui/react"
 import Img from "gatsby-image"
 
 export const Press = ({ scmp }) => {

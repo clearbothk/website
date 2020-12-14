@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, Box, Heading, Grid } from "@chakra-ui/core"
+import { Text, Box, Heading, Grid } from "@chakra-ui/react"
 import Img from "gatsby-image"
 
 interface BannerProps {

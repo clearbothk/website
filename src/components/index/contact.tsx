@@ -12,7 +12,7 @@ import {
   FormLabel,
   Input,
   Textarea,
-} from "@chakra-ui/core"
+} from "@chakra-ui/react"
 import Img from "gatsby-image"
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa"
 

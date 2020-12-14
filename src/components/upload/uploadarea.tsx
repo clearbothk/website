@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Text, useToast, Box, Flex, Progress } from "@chakra-ui/core"
+import { Text, useToast, Box, Flex, Progress } from "@chakra-ui/react"
 
 import { BlobServiceClient } from "@azure/storage-blob"
 import { useDropzone } from "react-dropzone"
@@ -18,7 +18,10 @@ export const UploadArea = () => {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "application/zip, application/x-zip-compressed", disabled: uploading })
+  } = useDropzone({
+    accept: "application/zip, application/x-zip-compressed",
+    disabled: uploading,
+  })
 
   function getColor(): string {
     if (isDragAccept) {

@@ -1,6 +1,6 @@
 import React from "react"
 import { SectionLayout } from "./sectionlayout"
-import { Text, Flex, Box, Grid, Heading } from "@chakra-ui/core"
+import { Text, Flex, Box, Grid, Heading } from "@chakra-ui/react"
 import Img from "gatsby-image"
 
 export const Awards = ({ awards }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Button, useToast } from "@chakra-ui/core"
+import { Button, useToast } from "@chakra-ui/react"
 
 export const SendLabels = ({ image, annotations, reset }) => {
   const toast = useToast()

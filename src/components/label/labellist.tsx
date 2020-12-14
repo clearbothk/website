@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
-import { Stack, Box, Flex, Text, IconButton } from "@chakra-ui/core"
-import { keyframes } from "@emotion/core"
+import { Stack, Box, Flex, Text, IconButton } from "@chakra-ui/react"
+import { keyframes } from "@emotion/react"
 
 const deleteAnnotation = (key, annotations, setAnnotations) => {
   const filteredAnnotations = annotations.filter(ann => ann.data.id !== key)
