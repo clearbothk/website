@@ -51,7 +51,7 @@ export const UploadArea = () => {
       borderColor={getColor()}
       borderStyle="dashed"
       outline="none"
-      h="sm"
+      h="3xs"
       backgroundColor="#fafafa"
       maxW="5xl"
       margin="auto"
