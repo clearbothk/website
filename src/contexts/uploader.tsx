@@ -4,18 +4,23 @@ import { uploadTokenAPIURI } from "../constants/azureAPI"
 
 export interface FileUploadContext {
   files: File[]
+  userEmail: string
+  setUserEmail: React.Dispatch<React.SetStateAction<string>>
   addFileToUploadList: (file: File) => void
   clearFiles: () => void
 }
 
 const FileUploadContext = React.createContext<FileUploadContext>({
   files: [],
+  userEmail: undefined,
   addFileToUploadList: (file: File) => {},
   clearFiles: () => {},
+  setUserEmail: () => {},
 })
 
 const FileUploadProvider = ({ children }) => {
   const [files, setFiles] = useState<File[]>([])
+  const [userEmail, setUserEmail] = useState<string>("")
 
   const addFileToUploadList = (file: File) => {
     setFiles(oldFilesList => {
@@ -30,7 +35,13 @@ const FileUploadProvider = ({ children }) => {
 
   return (
     <FileUploadContext.Provider
-      value={{ files, addFileToUploadList, clearFiles }}
+      value={{
+        files,
+        addFileToUploadList,
+        clearFiles,
+        userEmail,
+        setUserEmail,
+      }}
     >
       {children}
     </FileUploadContext.Provider>
@@ -60,8 +71,14 @@ export const useAddFileToUploadList = () => {
   return addFileToUploadList
 }
 
+export const useUserEmail = () => {
+  const { userEmail, setUserEmail } = React.useContext(FileUploadContext)
+  return { userEmail, setUserEmail }
+}
+
 export const useAzureUpload = () => {
-  const upload = async (file: File, setProgressValue, email: string) => {
+  const { userEmail: email } = React.useContext(FileUploadContext)
+  const upload = async (file: File, setProgress) => {
     const filename = file.name
     const response = await fetch(uploadTokenAPIURI, {
       method: "POST",
@@ -82,7 +99,7 @@ export const useAzureUpload = () => {
       onProgress: progress => {
         const totalSize = file.size
         const { loadedBytes } = progress
-        setProgressValue((loadedBytes / totalSize) * 100.0)
+        setProgress((loadedBytes / totalSize) * 100.0)
       },
     })
     return uploadBlobResponse
