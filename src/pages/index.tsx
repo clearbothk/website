@@ -11,7 +11,6 @@ import { HeaderVideo } from "../components/index/headervideo"
 import vidClearbotHeader from "../videos/clearbot.mp4"
 
 const IndexPage = ({ data }) => {
-  console.log(data)
   return (
     <Layout>
       <SEO title="Home" />
