@@ -69,6 +69,7 @@ module.exports = {
       "Glass jar",
       "Other plastic",
       "Cigarette",
+      "Disposable Masks",
     ],
   },
   proxy: [

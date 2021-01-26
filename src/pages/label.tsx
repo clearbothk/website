@@ -8,7 +8,9 @@ import {
   Heading,
   useToast,
   Select,
+  Input,
 } from "@chakra-ui/react"
+import { useCombobox } from "downshift"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -25,13 +27,47 @@ const Dropdown = ({
   options: string[]
   value: any
   onChange: any
-}) => (
-  <Select value={value} onChange={onChange}>
-    {options.map(op => (
-      <option value={op}>{op}</option>
-    ))}
-  </Select>
-)
+}) => {
+  const [inputItems, setInputItems] = useState(options)
+
+  const {
+    isOpen,
+    selectedItem,
+    getToggleButtonProps,
+    getLabelProps,
+    getMenuProps,
+    getInputProps,
+    getComboboxProps,
+    highlightedIndex,
+    getItemProps,
+  } = useCombobox({
+    items: options,
+    onInputValueChange: ({ inputValue }) => {
+      setInputItems(
+        options.filter(item =>
+          item.toLowerCase().includes(inputValue.toLowerCase())
+        )
+      )
+    },
+  })
+
+  return (
+    <Flex {...getComboboxProps()} direction="column">
+      <Flex>
+        <Input
+          {...getInputProps()}
+          placeholder="Search to filter options"
+          my={1}
+        />
+      </Flex>
+      <Select placeholder="Please select one" value={value} onChange={onChange}>
+        {inputItems.map(op => (
+          <option value={op}>{op}</option>
+        ))}
+      </Select>
+    </Flex>
+  )
+}
 
 const Label = ({ data }) => {
   console.log(data)
@@ -98,6 +134,7 @@ const Label = ({ data }) => {
     setImageURL("")
     getImageFromAzure()
   }
+
   return (
     <Layout>
       <SEO title="Labelling Tool" />
