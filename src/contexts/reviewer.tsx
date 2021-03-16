@@ -7,7 +7,7 @@ import React, {
 } from "react"
 import { reviewCompleteURI, reviewFetchURI } from "../constants/azureAPI"
 
-interface ReviewBlob {
+export interface ReviewBlob {
   filename: string
   uri: string
   sas: string
@@ -16,16 +16,25 @@ interface ReviewBlob {
 interface ReviewContext {
   files: ReviewBlob[]
   setFiles: React.Dispatch<React.SetStateAction<ReviewBlob[]>>
+  loading: boolean
 }
 
 const ReviewContext = createContext<ReviewContext>({
   files: [],
   setFiles: () => {},
+  loading: true,
 })
 
 const ReviewContextProvider = ({ children }) => {
   const [reviewData, setReviewData] = useState<ReviewBlob[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
   useEffect(() => {
+    setLoading(false)
+  }, [reviewData])
+
+  useEffect(() => {
+    setLoading(true)
     fetch(reviewFetchURI, {
       method: "GET",
     }).then(async data => {
@@ -49,6 +58,7 @@ const ReviewContextProvider = ({ children }) => {
       value={{
         files: reviewData,
         setFiles: setReviewData,
+        loading,
       }}
     >
       {children}
@@ -57,11 +67,11 @@ const ReviewContextProvider = ({ children }) => {
 }
 
 export const useReviewFilePaginated = () => {
-  const { files } = useContext(ReviewContext)
+  const { files, loading } = useContext(ReviewContext)
   const pageSize = 20
   const getPage = page => files.slice((page - 1) * pageSize, page * pageSize)
   const totalPages = Math.ceil(files.length / pageSize)
-  return { getPage, totalPages }
+  return { files, getPage, totalPages, loading }
 }
 
 export const useApprover = () => {

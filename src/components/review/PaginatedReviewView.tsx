@@ -1,5 +1,13 @@
-import { Flex, Grid, Text, Image, Box, Button } from "@chakra-ui/react"
-import React, { useState } from "react"
+import {
+  Flex,
+  Grid,
+  Text,
+  Image,
+  Box,
+  Button,
+  Checkbox,
+} from "@chakra-ui/react"
+import React, { useEffect, useState } from "react"
 import {
   Paginator,
   Previous,
@@ -7,16 +15,25 @@ import {
   PageGroup,
   Container,
 } from "chakra-paginator"
-import { useApprover, useReviewFilePaginated } from "../../contexts/reviewer"
+import {
+  ReviewBlob,
+  useApprover,
+  useReviewFilePaginated,
+} from "../../contexts/reviewer"
 
 function PaginatedReviewViewElement({ imageFile }) {
   const approve = useApprover()
   const [isLoading, setLoading] = useState(false)
 
   return (
-    <Flex key={imageFile.filename} direction="column" py={4}>
-      <Image src={`${imageFile.uri}?${imageFile.sas}`} />
-      <Flex m="auto" py="4">
+    <Flex key={imageFile.filename} direction="row" py={4} alignItems="center">
+      <Image
+        src={`${imageFile.uri}?${imageFile.sas}`}
+        boxSize={20}
+        justifySelf="flex-start"
+      />
+      <Text px={2}>{imageFile.filename}</Text>
+      <Flex ml="auto" py="4">
         <Button
           variant="outline"
           colorScheme="green"
@@ -52,20 +69,80 @@ function PaginatedReviewViewElement({ imageFile }) {
 
 export default function PaginatedReviewView() {
   const [page, setCurrentPage] = useState(1)
-  const { getPage, totalPages } = useReviewFilePaginated()
+  const { files, getPage, totalPages, loading } = useReviewFilePaginated()
+  const [imageFiles, setImageFiles] = useState<ReviewBlob[]>([])
+  const [allSelected, setAllSelected] = useState<boolean>(false)
+  const [allApprovalLoading, setAllApprovalLoading] = useState<boolean>(false)
+  const approve = useApprover()
 
   const handlePageChange = (nextPage: number) => {
     setCurrentPage(nextPage)
   }
 
+  useEffect(() => {
+    if (!loading) {
+      setImageFiles(getPage(page))
+    }
+  }, [loading, allApprovalLoading])
+
+  useEffect(() => {
+    setImageFiles(getPage(page))
+  }, [page])
+
+  useEffect(() => {
+    if (!allApprovalLoading) {
+      setImageFiles(getPage(page))
+    }
+  }, [files])
+
+  function approveAll() {
+    setAllApprovalLoading(true)
+    Promise.all(
+      imageFiles.map(imageFile => {
+        return approve(imageFile.filename, true)
+      })
+    ).then(() => {
+      setAllApprovalLoading(false)
+    })
+  }
+
+  if (loading) {
+    return <Text>Loading</Text>
+  }
+
   return (
-    <Flex direction="column">
-      <Grid templateColumns="1fr 1fr 1fr 1fr" gridGap={8} maxW="6xl" m="auto">
-        {getPage(page).map(imageFile => {
+    <Flex maxW="6xl" direction="column" m="auto">
+      <Flex>
+        <Checkbox
+          isChecked={allSelected}
+          onChange={e => {
+            if (e.target.checked) {
+              setAllSelected(true)
+            } else {
+              setAllSelected(false)
+            }
+          }}
+        >
+          Select all
+        </Checkbox>
+        <Button
+          variant="ghost"
+          colorScheme="green"
+          size="sm"
+          mx={4}
+          isDisabled={!allSelected || allApprovalLoading}
+          isLoading={allApprovalLoading}
+          onClick={approveAll}
+        >
+          Approve all
+        </Button>
+      </Flex>
+      <Flex direction="column">
+        {imageFiles.map(imageFile => {
           console.log(page, imageFile)
           return <PaginatedReviewViewElement imageFile={imageFile} />
         })}
-      </Grid>
+      </Flex>
       <Paginator
         innerLimit={3}
         outerLimit={2}
