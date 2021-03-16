@@ -68,7 +68,7 @@ const ReviewContextProvider = ({ children }) => {
 
 export const useReviewFilePaginated = () => {
   const { files, loading } = useContext(ReviewContext)
-  const pageSize = 20
+  const pageSize = 40
   const getPage = page => files.slice((page - 1) * pageSize, page * pageSize)
   const totalPages = Math.ceil(files.length / pageSize)
   return { files, getPage, totalPages, loading }
