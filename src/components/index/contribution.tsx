@@ -2,6 +2,7 @@ import React from "react"
 import { SectionLayout } from "./sectionlayout"
 import { Text, Flex, Box, Grid, Heading, Icon, Link } from "@chakra-ui/react"
 import Img from "gatsby-image"
+import Colabs from "./colabs"
 
 export const Contribution = ({ prediction, helpus }) => {
   return (
@@ -17,6 +18,7 @@ export const Contribution = ({ prediction, helpus }) => {
         height="100%"
         backgroundColor="rgba(0,0,0,0.4)"
       >
+        <Colabs />
         <Box>
           <Heading
             color="white"

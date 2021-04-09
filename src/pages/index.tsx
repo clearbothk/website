@@ -9,6 +9,7 @@ import { Contribution } from "../components/index/contribution"
 import { Contact } from "../components/index/contact"
 import { HeaderVideo } from "../components/index/headervideo"
 import vidClearbotHeader from "../videos/clearbot.mp4"
+import Colabs from "../components/index/colabs"
 
 const IndexPage = ({ data }) => {
   return (
