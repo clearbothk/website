@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Grid,
-  Text,
-  Image,
-  Box,
-  Button,
-  Checkbox,
-} from "@chakra-ui/react"
+import { Flex, Text, Image, Button, Checkbox } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import {
   Paginator,

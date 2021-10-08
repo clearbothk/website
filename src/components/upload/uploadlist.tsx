@@ -1,26 +1,15 @@
 import {
   Box,
   Flex,
-  Grid,
   List,
   ListItem,
-  Progress,
   Text,
   CircularProgress,
-  CircularProgressLabel,
   Heading,
-  Input,
-  Button,
-  useToast,
   Badge,
 } from "@chakra-ui/react"
-import React, { useEffect, useRef, useState } from "react"
-import {
-  useAzureUpload,
-  useClearUploadList,
-  useUploadList,
-  useUserEmail,
-} from "../../contexts/uploader"
+import React, { useEffect, useState } from "react"
+import { useAzureUpload, useUploadList } from "../../contexts/uploader"
 
 export interface UploadListItem {
   file: File
