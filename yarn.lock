@@ -1675,8 +1675,8 @@
 
 "@clearbothk/react-image-annotation@^0.0.3":
   version "0.0.3"
-  resolved "https://npm.pkg.github.com/download/@clearbothk/react-image-annotation/0.0.3/87fa5b136a8a29e45d0d1b400b834ddf67424d062bc72a339421d66bd8b91627#7074ad7761bf9c275bf51e610b705e7af0f01ac6"
-  integrity sha512-WiBkSDSa4HneDXV04yfB7M5N5FiE898jXbwOi/n9YQRgtvsy2zw5hYMkPoh4uzwSmGeIu6M6E5t1gTAB9P0Xgg==
+  resolved "https://registry.yarnpkg.com/@clearbothk/react-image-annotation/-/react-image-annotation-0.0.3.tgz#dba926fcd27a22d8f4944ac1dd599826786e6e8f"
+  integrity sha512-CTr63Fs2TrAw3cUnqkKfHVk9OSE8iA4W9qHNqT4OUyKaAFWtL4hbD+S7KBDh9L8fBJoADCBAAAZtqD9yPwXFWg==
   dependencies:
     styled-components "^3.1.6"
 
