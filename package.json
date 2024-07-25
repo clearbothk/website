@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "gatsby-plugin-cname": "^1.0.0",
-    "gh-pages": "^3.0.0",
+    "gh-pages": "^5.0.0",
     "prettier": "2.0.5"
   },
   "keywords": [
